@@ -1,42 +1,38 @@
 <?php
-include_once 'includes/functions.php';
+
 include_once 'includes/header.php';
 $user->checkLoginStatus();
-$user->checkUserRole(10);
-
-if(isset($_POST['update-info'])){
-	$feedback = $user->checkUserRegisterInput($_POST['uname'], $_POST['umail'], $_POST['upass'], $_POST['upassrepeat']);
+if(isset($_POST['update-submit'])){
+	$feedback = $user->checkUserRegisterInput($_SESSION['user_name'], $_POST['umail'], $_POST['npass'], $_POST['npassrepeat']);
+	
 	if($feedback === 1){
-		$user->register($_POST['uname'], $_POST['umail'], $_POST['upass'], $_POST['upassrepeat']);
+		$user->editUserInfo($_POST['umail'], $_POST['opass'], $_POST['npass'], $_SESSION['user_id'], $_SESSION['user_role'], 1);
 	}
 	else{
-		foreach ($feedback as $items){
-		echo $items;
+		foreach($feedback as $item){
+			echo $item;
 		}
 	}
-	
 }
 ?>
 
+
 <div class="container">
-<h1>Edit user</h1>
-    <form action="" method="post">
-
-	   <label for="uname">Username:</label><br>
-  <input type="text" id="uname" name="uname" value="" disabled><br>
-  <label for="umail">Email:</label><br>
-  <input type="text" id="umail" name="umail" value="" required="required"><br>
-  <label for="upass">Password:</label><br>
-  <input type="password" id="upass" name="upass" value="" required="required"><br><br>
-  <label for="upassrepeat">Repeat Password:</label><br>
-  <input type="password" id="upassrepeat" name="upassrepeat" value="" required="required"><br><br>
-	  
-        <!-- Submit Button -->
-        <input type="submit" name="update-info" value="Update"> 
-		
-
+<h1>Edit user info</h1>
+    <form method="post">
+		<label for="uname">Username</label><br>
+        <input type="text" name="uname" id="uname" value="<?php echo $_SESSION['user_name'] ?>" disabled><br>
+		<label for="umail">Email</label><br>
+        <input type="text" name="umail" id="umail" value="<?php echo $_SESSION['user_mail'] ?>"><br>
+		<label for="upass">Old password</label><br>
+        <input type="password" name="opass" id="opass"><br>
+		<label for="upass">New password</label><br>
+        <input type="password" name="npass" id="npass"><br>
+		<label for="upassrepeat">Repeat new password</label><br>
+        <input type="password" name="npassrepeat" id="npassrepeat"><br>
+        <input type="submit" name="update-submit" value="Register">
     </form>
-</div>
+</div>	
 <?php 
 include_once 'includes/footer.php';
 ?>
