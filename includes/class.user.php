@@ -1,11 +1,8 @@
 <?php
 class User {
-  public $username;
-  public $email;
-  private $password;
-  public $role;
-  private $status;
-  public $pdo;
+  private $username;
+  private $role;
+  private $pdo;
   private $errorMessages = [];
   private $errorState = 0;
 
@@ -203,4 +200,16 @@ class User {
 		
 	}
 
+	public function deleteUser($uid){
+		$stmt_deleteUser = $this->pdo->prepare('DELETE FROM table_users WHERE u_id = :uid');
+		$stmt_deleteUser->bindParam(":uid", $uid, PDO::PARAM_INT);
+			if($stmt_deleteUser->execute()){
+			return "User deleted successfully";
+
+		}
+		else{
+			return "something unexpected has happend, try again later";
+		}
+	}
+	
 }

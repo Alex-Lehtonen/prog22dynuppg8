@@ -29,7 +29,7 @@ if(isset($_POST['admin-update-submit'])){
 
 <div class="container">
 <h1>Edit user info</h1>
-    <form method="post">
+    <form method="post" class="md-5">
 		<label for="uname">Username</label><br>
         <input type="text" name="uname" id="uname" value="<?php echo $userInfoArray['u_name'] ?>" readonly><br>
 		<label for="umail">Email</label><br>
@@ -57,8 +57,10 @@ if(isset($_POST['admin-update-submit'])){
 		<input type="checkbox" id="is-disabled" name="is-disabled" value="1" <?php if($userInfoArray['u_status'] === 0){echo "checked";} ?>>
 		<br>
 		
-        <input type="submit" name="admin-update-submit" value="Update">
+        <input type="submit" name="admin-update-submit" value="Update" class="btn btn-success">
     </form>
+
+			<a href="confirm-delete.php?uid=<?php echo $_GET['uid'] ?>" class="btn btn-danger">Delete this user </a>
 </div>	
 <?php 
 include_once 'includes/footer.php';
